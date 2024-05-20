@@ -1,82 +1,76 @@
-const slider = document.querySelector('.slider')
-const sliderLeft = document.querySelector('.slider__left')
-const sliderRight = document.querySelector('.slider__right')
-const slidesCounter = sliderRight.querySelectorAll('div').length
-const dwnBtn = document.querySelector('.dwn-btn')
-const upBtn = document.querySelector('.up-btn')
+const slider = document.querySelector('.slider');
+const sliderLeft = document.querySelector('.slider__left');
+const sliderRight = document.querySelector('.slider__right');
+const slidesCounter = sliderRight.querySelectorAll('div').length;
+const dwnBtn = document.querySelector('.dwn-btn');
+const upBtn = document.querySelector('.up-btn');
 
-//стартове значення змінної для активного слайду
-let activeSlideIndex = 0
+// Стартовое значение переменной для активного слайда
+let activeSlideIndex = 0;
 
-
-sliderLeft.style.top = `-${(slidesCounter -1)*100}vh`
+sliderLeft.style.top = `-${(slidesCounter -1)*100}vh`;
 
 upBtn.addEventListener('click', function () {
-    nextSlide('up')
-})
+    nextSlide('up');
+});
+
 dwnBtn.addEventListener('click', function () {
-    nextSlide('down')
-})
+    nextSlide('down');
+});
 
-
+function updateButtons() {
+    if (activeSlideIndex === 0) {
+        upBtn.style.backgroundColor = 'rgb(13, 237, 103)';
+        upBtn.style.color = 'white';
+        upBtn.style.display = 'block'
+        dwnBtn.style.display = 'none'; // Показываем кнопку на всех слайдах, кроме последнего
+    } else if (activeSlideIndex === 1) {
+        upBtn.style.backgroundColor = 'rgb(237, 192, 13)';
+        upBtn.style.color = 'white';
+        dwnBtn.style.backgroundColor = 'rgb(237, 192, 13)';
+        dwnBtn.style.color = 'white';
+        upBtn.style.display = 'block'
+        dwnBtn.style.display = 'block'; // Показываем кнопку на всех слайдах, кроме последнего
+    } else if (activeSlideIndex === 2) {
+        upBtn.style.backgroundColor = 'rgb(215, 43, 23)';
+        upBtn.style.color = 'white';
+        dwnBtn.style.backgroundColor = 'rgb(215, 43, 23)';
+        dwnBtn.style.color = 'white';
+        upBtn.style.display = 'block'
+        dwnBtn.style.display = 'block'; // Показываем кнопку на всех слайдах, кроме последнего
+    } else if (activeSlideIndex === slidesCounter - 1) {
+        dwnBtn.style.backgroundColor = 'rgb(76, 76, 215)';
+        dwnBtn.style.color = 'white';
+        dwnBtn.style.display = 'block';
+        upBtn.style.display = 'none' // Скрываем кнопку только на последнем слайде
+    } else {
+        upBtn.style.backgroundColor = 'black';
+        upBtn.style.color = 'white';
+        dwnBtn.style.display = 'block';
+        upBtn.style.display = 'block' // Показываем кнопку на всех слайдах, кроме последнего
+    }
+}
 
 function nextSlide(direction) {
     if (direction === 'up') {
-        activeSlideIndex++
-        if(activeSlideIndex === 1){
-            upBtn.style.backgroundColor = 'rgb(237, 192, 13)'
-            upBtn.style.color = 'white'
-            console.log(activeSlideIndex)
-        }else if (activeSlideIndex === 2){
-            upBtn.style.backgroundColor = 'rgb(215, 43, 23)'
-            upBtn.style.color = 'white'
-            console.log(activeSlideIndex)
-        }else if (activeSlideIndex === 3){
-            upBtn.style.backgroundColor = 'rgb(76, 76, 215)'
-            upBtn.style.color = 'white'
-            console.log(activeSlideIndex)
-        }else if (activeSlideIndex === 0){
-            upBtn.style.backgroundColor = 'rgb(13, 237, 103)'
-            upBtn.style.color = 'white'
-            console.log(activeSlideIndex)
-        }
+        activeSlideIndex++;
         if (activeSlideIndex === slidesCounter) {
-            activeSlideIndex = 0
-            upBtn.style.backgroundColor = 'black'
-            upBtn.style.color = 'white'
+            activeSlideIndex = 0;
         }
     } else if (direction === 'down') {
-        activeSlideIndex--
-        dwnBtn.style.backgroundColor = 'red'
+        activeSlideIndex--;
         if (activeSlideIndex < 0) {
-            activeSlideIndex = slidesCounter - 1
-            dwnBtn.style.backgroundColor = 'orange'
-            
+            activeSlideIndex = slidesCounter - 1;
         }
-        if(activeSlideIndex === 1){
-                dwnBtn.style.backgroundColor = 'rgb(237, 192, 13)'
-                dwnBtn.style.color = 'white'
-                console.log(activeSlideIndex)
-            }else if (activeSlideIndex === 2){
-                dwnBtn.style.backgroundColor = 'rgb(215, 43, 23)'
-                dwnBtn.style.color = 'white'
-                console.log(activeSlideIndex)
-            }else if (activeSlideIndex === 3){
-                dwnBtn.style.backgroundColor = 'rgb(76, 76, 215)'
-                dwnBtn.style.color = 'white'
-                console.log(activeSlideIndex)
-            }else if (activeSlideIndex === 0){
-                dwnBtn.style.backgroundColor = 'rgb(13, 237, 103)'
-                dwnBtn.style.color = 'white'
-                console.log(activeSlideIndex)
-            }
-
-           
     }
-  
-    const height = slider.clientHeight
 
+    const height = slider.clientHeight;
 
-    sliderLeft.style.transform = `translateY(${activeSlideIndex*height}px)`
-    sliderRight.style.transform = `translateY(-${activeSlideIndex*height}px)`
+    sliderLeft.style.transform = `translateY(${activeSlideIndex * height}px)`;
+    sliderRight.style.transform = `translateY(-${activeSlideIndex * height}px)`;
+
+    updateButtons();
 }
+
+// Инициализация кнопок
+updateButtons();
